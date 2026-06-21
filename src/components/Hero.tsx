@@ -20,12 +20,7 @@ export interface HeroProps {
 
 // ─── Styles ───────────────────────────────────────────────────────────────────
 const Section = styled.section`
-  background: linear-gradient(
-    75deg,
-    ${tokens.snow} -65.58%,
-    ${tokens.cream} 29.37%,
-    ${tokens.sand} 217.98%
-  );
+  background: var(--color-hero-gradient);
   overflow: hidden;
 `;
 

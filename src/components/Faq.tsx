@@ -16,6 +16,7 @@ export interface FaqProps {
   heading: string;
   subtitle: string;
   items: FaqItem[];
+  isDark?: boolean;
 }
 
 // ─── Styles ───────────────────────────────────────────────────────────────────
@@ -53,7 +54,7 @@ const Subtitle = styled.p`
   font-size: 20px;
   line-height: 28px;
   letter-spacing: 0.1px;
-  color: ${tokens.bodyMuted};
+  color: ${tokens.dark};
   margin: 0;
 `;
 
@@ -65,8 +66,8 @@ const AccordionGroup = styled.div`
 `;
 
 const AccordionItem = styled.div`
-  border-top: 1px solid ${tokens.dark};
-  border-bottom: 1px solid ${tokens.dark};
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
   padding: 24px 0;
   display: flex;
   flex-direction: column;
@@ -105,32 +106,35 @@ const AccordionTitle = styled.p`
   margin: 0;
 `;
 
-const AccordionIcon = styled.img`
+const AccordionIcon = styled.img<{ $isDark?: boolean }>`
   width: 24px;
   height: 24px;
   flex-shrink: 0;
+  filter: ${({ $isDark }) => ($isDark ? 'invert(1)' : 'none')};
 `;
 
 const AccordionBody = styled.p`
   font-size: 16px;
   line-height: 22px;
   letter-spacing: 0.2px;
-  color: ${tokens.dark};
+  color: var(--color-faq-answer);
   margin: 0;
 `;
 
 // ─── Accordion row ────────────────────────────────────────────────────────────
 interface AccordionRowProps extends FaqItem {
   open: boolean;
+  isDark?: boolean;
   onToggle: () => void;
 }
 
-function AccordionRow({ question, answer, open, onToggle }: AccordionRowProps) {
+function AccordionRow({ question, answer, open, isDark, onToggle }: AccordionRowProps) {
   return (
     <AccordionItem>
       <AccordionHeader onClick={onToggle} aria-expanded={open}>
         <AccordionTitle>{question}</AccordionTitle>
         <AccordionIcon
+          $isDark={isDark}
           src={open ? assets.iconMinus : assets.iconPlus}
           alt={open ? 'Collapse' : 'Expand'}
         />
@@ -141,7 +145,7 @@ function AccordionRow({ question, answer, open, onToggle }: AccordionRowProps) {
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
-export function Faq({ heading, subtitle, items }: FaqProps) {
+export function Faq({ heading, subtitle, items, isDark = false }: FaqProps) {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
@@ -157,6 +161,7 @@ export function Faq({ heading, subtitle, items }: FaqProps) {
               key={item.question}
               {...item}
               open={openIndex === i}
+              isDark={isDark}
               onToggle={() => setOpenIndex(openIndex === i ? -1 : i)}
             />
           ))}

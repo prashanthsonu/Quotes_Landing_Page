@@ -20,21 +20,21 @@ const Base = styled.button`
 `;
 
 export const PrimaryButton = styled(Base)`
-  background: ${tokens.dark};
-  color: ${tokens.snow};
+  background: var(--color-primary-btn-bg);
+  color: var(--color-primary-btn-text);
   border: none;
 
   &:hover {
-    background: #333;
+    background: var(--color-primary-btn-bg-hover);
   }
 `;
 
 export const SecondaryButton = styled(Base)`
   background: transparent;
-  color: ${tokens.dark};
-  border: 1.5px solid ${tokens.dark};
+  color: var(--color-secondary-btn-text);
+  border: 1.5px solid var(--color-secondary-btn-border);
 
   &:hover {
-    background: rgba(25, 25, 25, 0.05);
+    background: var(--color-secondary-btn-bg-hover);
   }
 `;

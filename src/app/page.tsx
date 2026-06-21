@@ -1,20 +1,13 @@
 'use client';
 
-import { useState } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import { useEffect, useSyncExternalStore, useState } from 'react';
+import styled from 'styled-components';
 import { tokens } from '@/lib/tokens';
 import { Navbar } from '@/components/Navbar';
 import { Hero } from '@/components/Hero';
 import { Carousel, type Slide } from '@/components/Carousel';
 import { Faq, type FaqItem } from '@/components/Faq';
 import { Footer } from '@/components/Footer';
-
-// ─── Global font variable ────────────────────────────────────────────────────
-const GlobalStyle = createGlobalStyle`
-  :root {
-    --font-body: ${tokens.font};
-  }
-`;
 
 const Page = styled.div`
   background-color: ${tokens.snow};
@@ -59,36 +52,104 @@ const faqItems: FaqItem[] = [
   },
 ];
 
+type ThemePreference = 'light' | 'dark';
+
+function subscribeToThemeChanges(onStoreChange: () => void) {
+  if (typeof window === 'undefined') {
+    return () => {};
+  }
+
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+  window.addEventListener('storage', onStoreChange);
+  window.addEventListener('themechange', onStoreChange);
+  mediaQuery.addEventListener('change', onStoreChange);
+
+  return () => {
+    window.removeEventListener('storage', onStoreChange);
+    window.removeEventListener('themechange', onStoreChange);
+    mediaQuery.removeEventListener('change', onStoreChange);
+  };
+}
+
+function getThemePreferenceSnapshot(): ThemePreference | null {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  const savedTheme = window.localStorage.getItem('theme');
+  if (savedTheme === 'dark' || savedTheme === 'light') {
+    return savedTheme;
+  }
+
+  return null;
+}
+
+function getServerThemePreferenceSnapshot(): ThemePreference | null {
+  return null;
+}
+
+function getSystemPrefersDarkSnapshot() {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
+function getServerSystemPrefersDarkSnapshot() {
+  return false;
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function Home() {
   const [activeSlide, setActiveSlide] = useState(0);
+  const themePreference = useSyncExternalStore(
+    subscribeToThemeChanges,
+    getThemePreferenceSnapshot,
+    getServerThemePreferenceSnapshot,
+  );
+  const systemPrefersDark = useSyncExternalStore(
+    subscribeToThemeChanges,
+    getSystemPrefersDarkSnapshot,
+    getServerSystemPrefersDarkSnapshot,
+  );
+  const isDark = themePreference === 'dark' || (themePreference === null && systemPrefersDark);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
+  }, [isDark]);
+
+  const toggleTheme = () => {
+    const nextTheme: ThemePreference = isDark ? 'light' : 'dark';
+    window.localStorage.setItem('theme', nextTheme);
+    window.dispatchEvent(new Event('themechange'));
+  };
 
   const prev = () => setActiveSlide((i) => (i - 1 + slides.length) % slides.length);
   const next = () => setActiveSlide((i) => (i + 1) % slides.length);
 
   return (
-    <>
-      <GlobalStyle />
-      <Page>
-        <Navbar />
+    <Page>
+      <Navbar isDark={isDark} onToggleTheme={toggleTheme} />
 
-        <Hero
-          title="Lorem ipsum dolor sit amet consect alora"
-          body="Adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi."
-          primaryCta="Primary CTA"
-          secondaryCta="Secondary CTA"
-        />
+      <Hero
+        title="Lorem ipsum dolor sit amet consect alora"
+        body="Adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi."
+        primaryCta="Primary CTA"
+        secondaryCta="Secondary CTA"
+      />
 
-        <Carousel slides={slides} activeIndex={activeSlide} onPrev={prev} onNext={next} />
+      <Carousel slides={slides} activeIndex={activeSlide} isDark={isDark} onPrev={prev} onNext={next} />
 
-        <Faq
-          heading="Frequently asked questions"
-          subtitle="Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis."
-          items={faqItems}
-        />
+      <Faq
+        heading="Frequently asked questions"
+        subtitle="Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis."
+        items={faqItems}
+        isDark={isDark}
+      />
 
-        <Footer />
-      </Page>
-    </>
+      <Footer />
+    </Page>
   );
 }

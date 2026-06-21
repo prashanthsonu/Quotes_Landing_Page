@@ -13,6 +13,7 @@ export interface Slide {
 export interface CarouselProps {
   slides: Slide[];
   activeIndex?: number;
+  isDark?: boolean;
   onPrev?: () => void;
   onNext?: () => void;
 }
@@ -20,6 +21,7 @@ export interface CarouselProps {
 
 // ─── Styles ───────────────────────────────────────────────────────────────────
 const Section = styled.section`
+  background: var(--color-bg-canvas);
   padding: 96px 0 0;
   display: flex;
   justify-content: center;
@@ -32,27 +34,14 @@ const Track = styled.div`
   align-items: center;
 `;
 
-const PEEK_WIDTH = 64;
-const PEEK_HEIGHT = 558;
-
-/**
- * Outer wrapper for the left peek.
- * rotate(180deg) × scaleY(-1) = net scaleX(-1): horizontally mirrors the card peek.
- * The flip is applied outside the overflow-clip container so clipping isn't affected.
- */
 const LeftPeekFlip = styled.div`
   flex-shrink: 0;
-  width: ${PEEK_WIDTH}px;
-  height: ${PEEK_HEIGHT}px;
-  overflow: hidden;
-  transform: scaleX(-1);
+  transform: rotate(360deg) scaleY(1);
 `;
 
 const RightPeekClip = styled.div`
   flex-shrink: 0;
-  width: ${PEEK_WIDTH}px;
-  height: ${PEEK_HEIGHT}px;
-  overflow: hidden;
+  transform: rotate(360deg) scaleY(1);
 `;
 
 const PeekImage = styled.img`
@@ -62,29 +51,19 @@ const PeekImage = styled.img`
   display: block;
 `;
 
-
-const Slide = styled.div`
+const Slide = styled.div<{ $isDark?: boolean }>`
   width: 1312px;
   height: 628px;
   border-radius: ${tokens.radius6};
   overflow: hidden;
   position: relative;
   flex-shrink: 0;
-  background-image: url('${assets.rectangle4}');
+  background-image: ${({ $isDark }) =>
+    $isDark
+      ? 'radial-gradient(223.62% 89.76% at 50% 84.71%, #ff6217 0%, #d24a33 15.44%, #a4324f 30.89%, #77196a 46.33%, #600d78 54.05%, #490186 61.77%, #3d076b 70.25%, #310d50 78.72%, #251334 87.2%, #191919 95.67%)'
+      : `url('${assets.rectangle4}')`};
   background-size: cover;
   background-position: center;
-`;
-
-const GradientOverlay = styled.div`
-  position: absolute;
-  inset: 0;
-  width: 1312px;
-  height: 628px;
-  background: linear-gradient(
-    to bottom,
-    rgba(25, 25, 25, 0) 71.576%,
-    rgba(25, 25, 25, 0.3) 100%
-  );
 `;
 
 const SlideInner = styled.div`
@@ -101,7 +80,7 @@ const SlideInner = styled.div`
 
 const TextCard = styled.div`
   backdrop-filter: blur(50px);
-  background: ${tokens.cream};
+  background: var(--color-card-quote);
   border-radius: ${tokens.radius5};
   padding: 32px 24px;
   width: 496px;
@@ -178,7 +157,7 @@ const WayfindingDot = styled.div<{ $active?: boolean }>`
   flex: 1 0 0;
   min-width: 1px;
   border-radius: 24px;
-  background: ${({ $active }) => ($active ? tokens.snow : 'rgba(255,255,255,0.5)')};
+  background: ${({ $active }) => ($active ? 'var(--color-wayfinding-active)' : 'var(--color-wayfinding-idle)')};
 `;
 
 const ArrowGroup = styled.div`
@@ -197,44 +176,42 @@ const ArrowButton = styled.button`
   padding: 0;
 `;
 
-/** Circle SVG fills the full 40×40 button. */
-const ArrowCircle = styled.img`
+const ArrowCircle = styled.img<{ $isDark?: boolean }>`
   position: absolute;
   left: 0;
   top: 0;
   width: 40px;
   height: 40px;
   display: block;
+  filter: ${({ $isDark }) => ($isDark ? 'brightness(0) saturate(100%)' : 'none')};
 `;
 
-/** Arrow icon SVG is 15×15, centered in the 40×40 button (12.5 px offset each side). */
-const ArrowIcon = styled.img`
+const ArrowIcon = styled.img<{ $isDark?: boolean }>`
   position: absolute;
   left: 12.5px;
   top: 12.5px;
   width: 15px;
   height: 15px;
   display: block;
+  filter: ${({ $isDark }) => ($isDark ? 'invert(1)' : 'none')};
 `;
 
 // ─── Component ────────────────────────────────────────────────────────────────
-export function Carousel({ slides, activeIndex = 0, onPrev, onNext }: CarouselProps) {
+export function Carousel({ slides, activeIndex = 0, isDark = false, onPrev, onNext }: CarouselProps) {
   const current = slides[activeIndex];
 
   return (
     <Section>
       <Track>
-        {/* Left peek — horizontally mirrored via rotate(180deg) scaleY(-1) = scaleX(-1) */}
         <LeftPeekFlip>
-          <PeekImage src={assets.rightPreview} alt="" />
+          <PeekImage src={assets.leftPreview} alt="" />
         </LeftPeekFlip>
 
-        <Slide>
-          <GradientOverlay />
+        <Slide $isDark={isDark}>
           <SlideInner>
             <TextCard>
               <Testimonial>
-                <QuoteText>"{current.quote}"</QuoteText>
+                <QuoteText>&ldquo;{current.quote}&rdquo;</QuoteText>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%' }}>
                   <QuoteAuthor>{current.author}</QuoteAuthor>
                 </div>
@@ -253,19 +230,18 @@ export function Carousel({ slides, activeIndex = 0, onPrev, onNext }: CarouselPr
               </BottomLeft>
               <ArrowGroup>
                 <ArrowButton onClick={onPrev} aria-label="Previous slide">
-                  <ArrowCircle src={assets.circle} alt="" />
-                  <ArrowIcon src={assets.arrowLeft} alt="" />
+                  <ArrowCircle src={assets.circle} alt="" $isDark={isDark} />
+                  <ArrowIcon src={assets.arrowLeft} alt="" $isDark={isDark} />
                 </ArrowButton>
                 <ArrowButton onClick={onNext} aria-label="Next slide">
-                  <ArrowCircle src={assets.circle} alt="" />
-                  <ArrowIcon src={assets.arrowRight} alt="" />
+                  <ArrowCircle src={assets.circle} alt="" $isDark={isDark} />
+                  <ArrowIcon src={assets.arrowRight} alt="" $isDark={isDark} />
                 </ArrowButton>
               </ArrowGroup>
             </SlideBottom>
           </SlideInner>
         </Slide>
 
-        {/* Right peek — no flip */}
         <RightPeekClip>
           <PeekImage src={assets.rightPreview} alt="" />
         </RightPeekClip>

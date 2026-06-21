@@ -6,12 +6,17 @@ import { tokens } from "@/lib/tokens";
 import { assets } from "@/lib/assets";
 import { MaxWidth } from "@/components/ui/MaxWidth";
 
+interface NavbarProps {
+  isDark: boolean;
+  onToggleTheme: () => void;
+}
+
 const Nav = styled.header`
   position: sticky;
   top: 0;
   z-index: 100;
   height: 80px;
-  background: ${tokens.snow};
+  background: var(--color-navbar-bg);
   box-shadow: ${tokens.shadow};
   display: flex;
   align-items: center;
@@ -37,8 +42,8 @@ const ThemeToggle = styled.button`
   justify-content: center;
   flex-shrink: 0;
   border-radius: 4px;
-  background: linear-gradient(313deg, #ffffff 1.28%, #e4e0e0 98.72%);
-  border: none;
+  background: var(--color-toggle-bg);
+  border: 1px solid transparent;
   cursor: pointer;
   position: absolute;
   right: -56px;
@@ -50,27 +55,41 @@ const ThemeToggle = styled.button`
   }
 
   &:focus-visible {
+    border-color: var(--color-border);
     outline: 2px solid ${tokens.dark};
     outline-offset: 2px;
-    box-shadow: 0 0 0 4px ${tokens.snow};
+    box-shadow: 0 0 0 4px var(--color-navbar-bg);
   }
 `;
 
-export function Navbar() {
+const MoonGlyph = styled(Image)`
+  display: block;
+`;
+
+export function Navbar({ isDark, onToggleTheme }: NavbarProps) {
   return (
     <Nav>
       <NavInner>
         <LogoWrapper>
           <Image
-            src={assets.logomark}
+            src={isDark ? assets.logomarkDark : assets.logomark}
             alt="Okta Logo"
             width={36}
             height={36}
             priority
           />
         </LogoWrapper>
-        <ThemeToggle type="button" aria-label="Toggle color theme">
-          <Image src={assets.sun} alt="" width={16} height={16} />
+        <ThemeToggle
+          type="button"
+          aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+          aria-pressed={isDark}
+          onClick={onToggleTheme}
+        >
+          {isDark ? (
+            <MoonGlyph src={assets.moon} alt="" width={16} height={16} aria-hidden="true" />
+          ) : (
+            <Image src={assets.sun} alt="" width={16} height={16} />
+          )}
         </ThemeToggle>
       </NavInner>
     </Nav>

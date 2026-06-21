@@ -4,10 +4,60 @@ body {
   overflow-x: hidden;
 }
 
+:root {
+  --font-body: var(--font-dm-sans), 'DM Sans', system-ui, -apple-system, sans-serif;
+
+  --color-navbar-bg: #fffefa;
+  --color-toggle-bg: linear-gradient(313deg, #ffffff 1.28%, #e4e0e0 98.72%);
+  --color-border: #1E1E1E;
+  --color-text-primary: #191919;
+  --color-hero-gradient: linear-gradient(75deg, #fffefa -65.58%, #f6f1e7 29.37%, #e8dcc7 217.98%);
+  --color-text-muted: rgba(0, 0, 0, 0.66);
+  --color-primary-btn-bg: #191919;
+  --color-primary-btn-text: #fffefa;
+  --color-primary-btn-bg-hover: #333333;
+  --color-secondary-btn-text: #191919;
+  --color-secondary-btn-border: #191919;
+  --color-secondary-btn-bg-hover: rgba(25, 25, 25, 0.05);
+  --color-bg-canvas: #fffefa;
+  --color-card-quote: #f6f1e7;
+  --color-wayfinding-active: #fffefa;
+  --color-wayfinding-idle: rgba(255, 255, 255, 0.5);
+  --color-faq-answer: #191919;
+  --color-footer-bg: #191919;
+  --color-footer-text: #fffefa;
+  --shadow-elevation-1: 0px 4px 4px 0px rgba(0, 0, 0, 0.06);
+}
+
+:root[data-theme='dark'] {
+  --color-navbar-bg: #1E1E1E;
+  --color-toggle-bg: linear-gradient(133deg, rgba(25, 25, 25, 0.80) 3.02%, rgba(127, 127, 127, 0.80) 100%);
+  --color-border: #fffefa;
+  --color-text-primary: #fffefa;
+  --color-hero-gradient: linear-gradient(79deg, #191919 15.16%,  #6B665F 277.89%);
+  --color-text-muted: #E5E5E5;
+  --color-primary-btn-bg: #FFFEFA;
+  --color-primary-btn-text: #191919;
+  --color-primary-btn-bg-hover: #ffffff;
+  --color-secondary-btn-text: #FFFEFA;
+  --color-secondary-btn-border: #FFFEFA;
+  --color-secondary-btn-bg-hover: rgba(242, 240, 234, 0.1);
+  --color-bg-canvas: #191919;
+  --color-card-quote: #191919;
+  --color-wayfinding-active: #191919;
+  --color-wayfinding-idle: rgba(0, 0, 0, 0.50);
+  --color-faq-answer: #FFFEFA;
+  --color-footer-bg: #191919;
+  --color-footer-text: #FFFEFA;
+  --shadow-elevation-1: 0px 1px 0px 0px rgba(245, 244, 239, 0.08);
+}
+
 body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: var(--color-bg-canvas);
+  color: var(--color-text-primary);
 }
 
 * {

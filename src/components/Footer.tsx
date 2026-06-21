@@ -1,12 +1,11 @@
 'use client';
 
 import styled from 'styled-components';
-import { tokens } from '@/lib/tokens';
 import { MaxWidth } from '@/components/ui/MaxWidth';
 
 // ─── Styles ───────────────────────────────────────────────────────────────────
 const FooterEl = styled.footer`
-  background: ${tokens.dark};
+  background: var(--color-footer-bg);
   height: 68px;
   display: flex;
   align-items: center;
@@ -21,7 +20,7 @@ const Copyright = styled.p`
   font-size: 14px;
   line-height: 20px;
   letter-spacing: 0.21px;
-  color: ${tokens.snow};
+  color: var(--color-footer-text);
   margin: 0;
 `;
 

@@ -1,13 +1,11 @@
 export const tokens = {
   // Colors
-  snow:      '#fffefa',
-  cream:     '#f6f1e7',
-  sand:      '#e8dcc7',
-  dark:      '#191919',
-  bodyMuted: 'rgba(0,0,0,0.66)',
+  snow:      'var(--color-bg-canvas)',
+  dark:      'var(--color-text-primary)',
+  bodyMuted: 'var(--color-text-muted)',
 
   // Shadows
-  shadow: '0px 4px 4px 0px rgba(0,0,0,0.06)',
+  shadow: 'var(--shadow-elevation-1)',
 
   // Border radii
   radius2: '6px',
