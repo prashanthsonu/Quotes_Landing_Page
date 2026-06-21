@@ -20,7 +20,7 @@ export interface FaqProps {
 
 // ─── Styles ───────────────────────────────────────────────────────────────────
 const Section = styled.section`
-  padding: 80px 0;
+  padding: 96px 0 80px;
 `;
 
 const Inner = styled(MaxWidth)`

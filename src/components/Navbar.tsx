@@ -4,6 +4,7 @@ import Image from "next/image";
 import styled from "styled-components";
 import { tokens } from "@/lib/tokens";
 import { assets } from "@/lib/assets";
+import { MaxWidth } from "@/components/ui/MaxWidth";
 
 const Nav = styled.header`
   position: sticky;
@@ -16,21 +17,11 @@ const Nav = styled.header`
   align-items: center;
 `;
 
-const NavInner = styled.div`
+const NavInner = styled(MaxWidth)`
   display: flex;
   align-items: center;
-  gap: 24px;
   height: 100%;
-  width: min(100%, 1368px);
-  margin: 0 auto;
-`;
-
-const NavInnerLeft = styled.div`
-  width: 1312px;
-  flex-shrink: 0;
-  height: 100%;
-  display: flex;
-  align-items: center;
+  position: relative;
 `;
 
 const LogoWrapper = styled.div`
@@ -49,10 +40,19 @@ const ThemeToggle = styled.button`
   background: linear-gradient(313deg, #ffffff 1.28%, #e4e0e0 98.72%);
   border: none;
   cursor: pointer;
+  position: absolute;
+  right: -56px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  @media (max-width: 1400px) {
+    right: 0;
+  }
 
   &:focus-visible {
-    outline: 2px solid ${tokens.snow};
+    outline: 2px solid ${tokens.dark};
     outline-offset: 2px;
+    box-shadow: 0 0 0 4px ${tokens.snow};
   }
 `;
 
@@ -60,17 +60,15 @@ export function Navbar() {
   return (
     <Nav>
       <NavInner>
-        <NavInnerLeft>
-          <LogoWrapper>
-            <Image
-              src={assets.logomark}
-              alt="Okta Logo"
-              width={36}
-              height={36}
-              priority
-            />
-          </LogoWrapper>
-        </NavInnerLeft>
+        <LogoWrapper>
+          <Image
+            src={assets.logomark}
+            alt="Okta Logo"
+            width={36}
+            height={36}
+            priority
+          />
+        </LogoWrapper>
         <ThemeToggle type="button" aria-label="Toggle color theme">
           <Image src={assets.sun} alt="" width={16} height={16} />
         </ThemeToggle>

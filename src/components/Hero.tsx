@@ -33,8 +33,8 @@ const Inner = styled(MaxWidth)`
   display: flex;
   align-items: stretch;
   justify-content: space-between;
-  gap: 48px;
-  min-height: 480px;
+  gap: 0;
+  min-height: 548px;
 `;
 
 const Content = styled.div`
@@ -44,7 +44,7 @@ const Content = styled.div`
   justify-content: center;
   padding: 64px 0;
   flex: 1;
-  max-width: 580px;
+  max-width: 600px;
 `;
 
 const Copy = styled.div`

@@ -20,7 +20,7 @@ export interface CarouselProps {
 
 // ─── Styles ───────────────────────────────────────────────────────────────────
 const Section = styled.section`
-  padding: 80px 0;
+  padding: 96px 0 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,6 +32,9 @@ const Track = styled.div`
   align-items: center;
 `;
 
+const PEEK_WIDTH = 64;
+const PEEK_HEIGHT = 558;
+
 /**
  * Outer wrapper for the left peek.
  * rotate(180deg) × scaleY(-1) = net scaleX(-1): horizontally mirrors the card peek.
@@ -39,12 +42,24 @@ const Track = styled.div`
  */
 const LeftPeekFlip = styled.div`
   flex-shrink: 0;
-  transform: rotate(360deg) scaleY(1);
+  width: ${PEEK_WIDTH}px;
+  height: ${PEEK_HEIGHT}px;
+  overflow: hidden;
+  transform: scaleX(-1);
 `;
 
 const RightPeekClip = styled.div`
   flex-shrink: 0;
-  transform: rotate(360deg) scaleY(1);
+  width: ${PEEK_WIDTH}px;
+  height: ${PEEK_HEIGHT}px;
+  overflow: hidden;
+`;
+
+const PeekImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 `;
 
 
@@ -211,7 +226,7 @@ export function Carousel({ slides, activeIndex = 0, onPrev, onNext }: CarouselPr
       <Track>
         {/* Left peek — horizontally mirrored via rotate(180deg) scaleY(-1) = scaleX(-1) */}
         <LeftPeekFlip>
-            <img src={assets.leftPreview} alt="" />
+          <PeekImage src={assets.rightPreview} alt="" />
         </LeftPeekFlip>
 
         <Slide>
@@ -252,7 +267,7 @@ export function Carousel({ slides, activeIndex = 0, onPrev, onNext }: CarouselPr
 
         {/* Right peek — no flip */}
         <RightPeekClip>
-          <img src={assets.rightPreview} alt="" />
+          <PeekImage src={assets.rightPreview} alt="" />
         </RightPeekClip>
       </Track>
     </Section>
