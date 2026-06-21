@@ -56,7 +56,6 @@ const KickerRow = styled.div`
   line-height: 28px;
   letter-spacing: 0.1px;
   color: ${tokens.dark};
-  opacity: 0.66;
 `;
 
 const KickerSep = styled.span`
