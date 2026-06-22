@@ -26,6 +26,10 @@ const Section = styled.section`
   justify-content: center;
   align-items: center;
   overflow: hidden;
+
+  @media (max-width: 1024px) {
+    padding: 64px 0 0;
+  }
 `;
 
 const Track = styled.div`
@@ -37,12 +41,32 @@ const LeftPreview = styled.div`
   flex-shrink: 0;
   width: 60px;
   height: 558px;
+
+  @media (max-width: 1024px) {
+    width: 26px;
+    height: 560px;
+    overflow: hidden;
+
+    & > img {
+      object-position: left center;
+    }
+  }
 `;
 
 const RightPreview = styled.div`
   flex-shrink: 0;
   width: 60px;
   height: 558px;
+
+  @media (max-width: 1024px) {
+    width: 26px;
+    height: 560px;
+    overflow: hidden;
+
+    & > img {
+      object-position: right center;
+    }
+  }
 `;
 
 const PeekImage = styled.img`
@@ -65,6 +89,13 @@ const Slide = styled.div<{ $isDark?: boolean }>`
       : `url('${assets.rectangle4}')`};
   background-size: cover;
   background-position: center;
+
+  @media (max-width: 1024px) {
+    width: 706px;
+    height: 628px;
+    background-position: 10% 80%;
+    background-size: 100% 100%;
+  }
 `;
 
 const SlideInner = styled.div`
@@ -77,6 +108,15 @@ const SlideInner = styled.div`
   flex-direction: column;
   justify-content: space-between;
   z-index: 2;
+
+  @media (max-width: 1024px) {
+    left: 32px;
+    top: 32px;
+    right: 32px;
+    bottom: 32px;
+    width: auto;
+    height: auto;
+  }
 `;
 
 const TextCard = styled.div`
@@ -89,6 +129,13 @@ const TextCard = styled.div`
   flex-direction: column;
   align-items: flex-start;
   flex-shrink: 0;
+
+  gap: 32px;
+
+  @media (max-width: 1024px) {
+    width: 396px;
+    gap: 32px;
+  }
 `;
 
 const quoteSwap = keyframes`
@@ -114,7 +161,7 @@ const QuoteSwap = styled.div`
 const Testimonial = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   align-items: flex-start;
   width: 100%;
 `;
@@ -126,6 +173,12 @@ const QuoteText = styled.p`
   color: ${tokens.bodyMuted};
   margin: 0;
   width: 100%;
+
+  @media (max-width: 1024px) {
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: 0.1px;
+  }
 `;
 
 const QuoteAuthor = styled.p`
@@ -135,6 +188,12 @@ const QuoteAuthor = styled.p`
   color: ${tokens.dark};
   margin: 0;
   width: 100%;
+
+  @media (max-width: 1024px) {
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0;
+  }
 `;
 
 const SlideBottom = styled.div`
@@ -162,6 +221,10 @@ const WayfindingWrapper = styled.div`
   align-items: center;
   justify-content: center;
   padding-left: 90px;
+
+  @media (max-width: 1024px) {
+    padding-left: 40px;
+  }
 `;
 
 const Wayfinding = styled.div`
@@ -171,6 +234,10 @@ const Wayfinding = styled.div`
   align-items: center;
   width: 250px;
   flex-shrink: 0;
+
+  @media (max-width: 1024px) {
+    width: 220px;
+  }
 `;
 
 const WayfindingDot = styled.div<{ $active?: boolean }>`
