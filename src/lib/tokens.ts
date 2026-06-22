@@ -13,5 +13,5 @@ export const tokens = {
   radius6: '24px',
 
   // Typography
-  font: "var(--font-dm-sans), 'DM Sans', system-ui, -apple-system, sans-serif",
+  font: "var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif",
 } as const;
