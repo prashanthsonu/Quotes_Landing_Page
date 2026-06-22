@@ -22,6 +22,18 @@ export interface HeroProps {
 const Section = styled.section`
   background: var(--color-hero-gradient);
   overflow: hidden;
+
+  @media (max-width: 1024px) {
+    margin: 0 33px;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+  }
+
+  @media (max-width: 767px) {
+    margin: 0;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+  }
 `;
 
 const Inner = styled(MaxWidth)`
@@ -30,6 +42,11 @@ const Inner = styled(MaxWidth)`
   justify-content: space-between;
   gap: 0;
   min-height: 548px;
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    min-height: auto;
+  }
 `;
 
 const Content = styled.div`
@@ -40,6 +57,18 @@ const Content = styled.div`
   padding: 64px 0;
   flex: 1;
   max-width: 600px;
+
+  @media (max-width: 1024px) {
+    flex: none;
+    gap: 48px;
+    max-width: none;
+    padding: 48px 64px;
+  }
+
+  @media (max-width: 767px) {
+    gap: 40px;
+    padding: 40px 16px;
+  }
 `;
 
 const Copy = styled.div`
@@ -56,6 +85,12 @@ const KickerRow = styled.div`
   line-height: 28px;
   letter-spacing: 0.1px;
   color: ${tokens.dark};
+
+  @media (max-width: 767px) {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+  }
 `;
 
 const KickerSep = styled.span`
@@ -71,6 +106,18 @@ const Title = styled.h1`
   font-weight: 400;
   color: ${tokens.dark};
   margin: 0;
+
+  @media (max-width: 1024px) {
+    font-size: 48px;
+    line-height: 56px;
+    letter-spacing: -0.96px;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 40px;
+    line-height: 48px;
+    letter-spacing: -0.8px;
+  }
 `;
 
 const Body = styled.p`
@@ -79,12 +126,27 @@ const Body = styled.p`
   letter-spacing: 0;
   color: ${tokens.bodyMuted};
   margin: 0;
+
+  @media (max-width: 767px) {
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: 0.1px;
+  }
 `;
 
 const ButtonGroup = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    width: 100%;
+
+    > button {
+      width: 100%;
+    }
+  }
 `;
 
 const ImageFrame = styled.div`
@@ -93,6 +155,21 @@ const ImageFrame = styled.div`
   position: relative;
   align-self: stretch;
   overflow: hidden;
+
+  @media (max-width: 1024px) {
+    flex: none;
+    width: 100%;
+    max-width: none;
+    height: 560px;
+    min-height: 560px;
+    max-height: 560px;
+  }
+
+  @media (max-width: 767px) {
+    height: 390px;
+    min-height: 390px;
+    max-height: 390px;
+  }
 `;
 
 // ─── Component ────────────────────────────────────────────────────────────────
