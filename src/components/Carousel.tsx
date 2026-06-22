@@ -18,7 +18,6 @@ export interface CarouselProps {
   onNext?: () => void;
 }
 
-
 // ─── Styles ───────────────────────────────────────────────────────────────────
 const Section = styled.section`
   background: var(--color-bg-canvas);

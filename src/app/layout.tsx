@@ -10,8 +10,11 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Acme — Platform Solution",
+  title: "Okta - Quotes Landing Page",
   description: "Lorem ipsum dolor sit amet consect alora",
+  icons: {
+    icon: "/Images/Okta_Logomark_Dark_Edition.svg",
+  },
 };
 
 export default function RootLayout({
