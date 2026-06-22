@@ -28,7 +28,7 @@ const Section = styled.section`
   overflow: hidden;
 
   @media (max-width: 1024px) {
-    padding: 64px 0 0;
+    padding: 64px 16px 0;
   }
 `;
 
