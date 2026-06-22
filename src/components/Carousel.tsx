@@ -33,12 +33,12 @@ const Track = styled.div`
   align-items: center;
 `;
 
-const LeftPeekFlip = styled.div`
+const LeftPreview = styled.div`
   flex-shrink: 0;
   transform: rotate(360deg) scaleY(1);
 `;
 
-const RightPeekClip = styled.div`
+const RightPreview = styled.div`
   flex-shrink: 0;
   transform: rotate(360deg) scaleY(1);
 `;
@@ -222,9 +222,9 @@ export function Carousel({ slides, activeIndex = 0, isDark = false, onPrev, onNe
   return (
     <Section>
       <Track>
-        <LeftPeekFlip>
+        <LeftPreview>
           <PeekImage src={assets.leftPreview} alt="" />
-        </LeftPeekFlip>
+        </LeftPreview>
 
         <Slide $isDark={isDark}>
           <SlideInner>
@@ -263,9 +263,9 @@ export function Carousel({ slides, activeIndex = 0, isDark = false, onPrev, onNe
           </SlideInner>
         </Slide>
 
-        <RightPeekClip>
+        <RightPreview>
           <PeekImage src={assets.rightPreview} alt="" />
-        </RightPeekClip>
+        </RightPreview>
       </Track>
     </Section>
   );
