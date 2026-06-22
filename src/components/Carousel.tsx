@@ -35,12 +35,14 @@ const Track = styled.div`
 
 const LeftPreview = styled.div`
   flex-shrink: 0;
-  transform: rotate(360deg) scaleY(1);
+  width: 60px;
+  height: 558px;
 `;
 
 const RightPreview = styled.div`
   flex-shrink: 0;
-  transform: rotate(360deg) scaleY(1);
+  width: 60px;
+  height: 558px;
 `;
 
 const PeekImage = styled.img`
