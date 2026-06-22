@@ -14,6 +14,14 @@ const FooterEl = styled.footer`
 const Inner = styled(MaxWidth)`
   display: flex;
   justify-content: center;
+
+  @media (max-width: 1024px) {
+    max-width: 900px;
+  }
+
+  @media (max-width: 767px) {
+    max-width: 390px;
+  }
 `;
 
 const Copyright = styled.p`
@@ -22,6 +30,7 @@ const Copyright = styled.p`
   letter-spacing: 0.21px;
   color: var(--color-footer-text);
   margin: 0;
+  text-align: center;
 `;
 
 // ─── Component ────────────────────────────────────────────────────────────────
