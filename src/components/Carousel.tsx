@@ -1,6 +1,6 @@
 'use client';
 
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { tokens } from '@/lib/tokens';
 import { assets } from '@/lib/assets';
 
@@ -87,6 +87,26 @@ const TextCard = styled.div`
   flex-direction: column;
   align-items: flex-start;
   flex-shrink: 0;
+`;
+
+const quoteSwap = keyframes`
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+`;
+
+const QuoteSwap = styled.div`
+  animation: ${quoteSwap} var(--dur-base) var(--ease-standard);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 `;
 
 const Testimonial = styled.div`
@@ -209,12 +229,14 @@ export function Carousel({ slides, activeIndex = 0, isDark = false, onPrev, onNe
         <Slide $isDark={isDark}>
           <SlideInner>
             <TextCard>
-              <Testimonial>
-                <QuoteText>&ldquo;{current.quote}&rdquo;</QuoteText>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%' }}>
-                  <QuoteAuthor>{current.author}</QuoteAuthor>
-                </div>
-              </Testimonial>
+              <QuoteSwap key={activeIndex}>
+                <Testimonial>
+                  <QuoteText>&ldquo;{current.quote}&rdquo;</QuoteText>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%' }}>
+                    <QuoteAuthor>{current.author}</QuoteAuthor>
+                  </div>
+                </Testimonial>
+              </QuoteSwap>
             </TextCard>
 
             <SlideBottom>
