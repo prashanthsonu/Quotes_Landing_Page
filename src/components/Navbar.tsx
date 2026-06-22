@@ -33,6 +33,16 @@ const NavInner = styled(MaxWidth)`
   align-items: center;
   height: 100%;
   position: relative;
+
+  @media (max-width: 1024px) {
+    padding-left: 34px;
+    padding-right: 34px;
+  }
+
+  @media (max-width: 767px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 `;
 
 const LogoWrapper = styled.div`
@@ -60,8 +70,12 @@ const ThemeToggle = styled.button`
     box-shadow var(--dur-fast) var(--ease-standard),
     border-color var(--dur-fast) var(--ease-standard);
 
-  @media (max-width: 1400px) {
-    right: 0;
+  @media (max-width: 1024px) {
+    right: 34px;
+  }
+
+  @media (max-width: 767px) {
+    right: 20px;
   }
 
   &:focus-visible {
