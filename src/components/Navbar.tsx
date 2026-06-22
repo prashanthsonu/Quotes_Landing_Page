@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import styled from "styled-components";
 import { tokens } from "@/lib/tokens";
@@ -11,15 +12,20 @@ interface NavbarProps {
   onToggleTheme: () => void;
 }
 
-const Nav = styled.header`
+const Nav = styled.header<{ $isScrolled: boolean }>`
   position: sticky;
   top: 0;
   z-index: 100;
   height: 80px;
   background: var(--color-navbar-bg);
-  box-shadow: ${tokens.shadow};
+  box-shadow: ${({ $isScrolled }) => ($isScrolled ? "0 8px 24px rgba(0, 0, 0, 0.08)" : tokens.shadow)};
+  backdrop-filter: ${({ $isScrolled }) => ($isScrolled ? "blur(8px)" : "none")};
   display: flex;
   align-items: center;
+  transition:
+    box-shadow var(--dur-base) var(--ease-standard),
+    backdrop-filter var(--dur-base) var(--ease-standard),
+    background-color var(--dur-base) var(--ease-standard);
 `;
 
 const NavInner = styled(MaxWidth)`
@@ -49,6 +55,10 @@ const ThemeToggle = styled.button`
   right: -56px;
   top: 50%;
   transform: translateY(-50%);
+  transition:
+    transform var(--dur-fast) var(--ease-snappy),
+    box-shadow var(--dur-fast) var(--ease-standard),
+    border-color var(--dur-fast) var(--ease-standard);
 
   @media (max-width: 1400px) {
     right: 0;
@@ -60,6 +70,14 @@ const ThemeToggle = styled.button`
     outline-offset: 2px;
     box-shadow: 0 0 0 4px var(--color-navbar-bg);
   }
+
+  &:hover {
+    transform: translateY(-50%) scale(1.04);
+  }
+
+  &:active {
+    transform: translateY(-50%) scale(0.98);
+  }
 `;
 
 const MoonGlyph = styled(Image)`
@@ -67,8 +85,38 @@ const MoonGlyph = styled(Image)`
 `;
 
 export function Navbar({ isDark, onToggleTheme }: NavbarProps) {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const ENTER_SCROLL_Y = 64;
+    const EXIT_SCROLL_Y = 40;
+
+    const onScroll = () => {
+      const y = window.scrollY;
+
+      setIsScrolled((prev) => {
+        if (!prev && y >= ENTER_SCROLL_Y) {
+          return true;
+        }
+
+        if (prev && y <= EXIT_SCROLL_Y) {
+          return false;
+        }
+
+        return prev;
+      });
+    };
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
+
   return (
-    <Nav>
+    <Nav $isScrolled={isScrolled}>
       <NavInner>
         <LogoWrapper>
           <Image

@@ -16,16 +16,36 @@ const Base = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition:
+    background var(--dur-fast) var(--ease-standard),
+    color var(--dur-fast) var(--ease-standard),
+    border-color var(--dur-fast) var(--ease-standard),
+    box-shadow var(--dur-base) var(--ease-standard),
+    transform var(--dur-fast) var(--ease-snappy);
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-border);
+    outline-offset: 3px;
+  }
 `;
 
 export const PrimaryButton = styled(Base)`
   background: var(--color-primary-btn-bg);
   color: var(--color-primary-btn-text);
   border: none;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
 
   &:hover {
     background: var(--color-primary-btn-bg-hover);
+    box-shadow: 0 12px 22px rgba(0, 0, 0, 0.12);
   }
 `;
 
@@ -33,8 +53,10 @@ export const SecondaryButton = styled(Base)`
   background: transparent;
   color: var(--color-secondary-btn-text);
   border: 1.5px solid var(--color-secondary-btn-border);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
 
   &:hover {
     background: var(--color-secondary-btn-bg-hover);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
   }
 `;

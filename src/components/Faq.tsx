@@ -111,6 +111,18 @@ const AccordionIcon = styled.img<{ $isDark?: boolean }>`
   height: 24px;
   flex-shrink: 0;
   filter: ${({ $isDark }) => ($isDark ? 'invert(1)' : 'none')};
+  transition: transform var(--dur-base) var(--ease-standard);
+`;
+
+const AccordionBodyWrap = styled.div<{ $open: boolean }>`
+  display: grid;
+  grid-template-rows: ${({ $open }) => ($open ? '1fr' : '0fr')};
+  transition: grid-template-rows var(--dur-base) var(--ease-standard), opacity var(--dur-base) var(--ease-standard);
+  opacity: ${({ $open }) => ($open ? 1 : 0)};
+`;
+
+const AccordionBodyInner = styled.div`
+  overflow: hidden;
 `;
 
 const AccordionBody = styled.p`
@@ -134,12 +146,15 @@ function AccordionRow({ question, answer, open, isDark, onToggle }: AccordionRow
       <AccordionHeader onClick={onToggle} aria-expanded={open}>
         <AccordionTitle>{question}</AccordionTitle>
         <AccordionIcon
+          style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}
           $isDark={isDark}
           src={open ? assets.iconMinus : assets.iconPlus}
           alt={open ? 'Collapse' : 'Expand'}
         />
       </AccordionHeader>
-      {open && answer && <AccordionBody>{answer}</AccordionBody>}
+      <AccordionBodyWrap $open={open && Boolean(answer)} aria-hidden={!open}>
+        <AccordionBodyInner>{answer && <AccordionBody>{answer}</AccordionBody>}</AccordionBodyInner>
+      </AccordionBodyWrap>
     </AccordionItem>
   );
 }
