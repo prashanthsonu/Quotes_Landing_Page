@@ -27,7 +27,7 @@ const Section = styled.section`
   align-items: center;
   overflow: hidden;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     padding: 64px 16px 0;
   }
 `;
@@ -42,7 +42,7 @@ const LeftPreview = styled.div`
   width: 60px;
   height: 558px;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     width: 26px;
     height: 560px;
     overflow: hidden;
@@ -58,7 +58,7 @@ const RightPreview = styled.div`
   width: 60px;
   height: 558px;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     width: 26px;
     height: 560px;
     overflow: hidden;
@@ -90,7 +90,7 @@ const Slide = styled.div<{ $isDark?: boolean }>`
   background-size: cover;
   background-position: center;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     width: 706px;
     height: 628px;
     background-position: 10% 80%;
@@ -109,7 +109,7 @@ const SlideInner = styled.div`
   justify-content: space-between;
   z-index: 2;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     left: 32px;
     top: 32px;
     right: 32px;
@@ -132,7 +132,7 @@ const TextCard = styled.div`
 
   gap: 32px;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     width: 396px;
     gap: 32px;
   }
@@ -174,7 +174,7 @@ const QuoteText = styled.p`
   margin: 0;
   width: 100%;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     font-size: 20px;
     line-height: 28px;
     letter-spacing: 0.1px;
@@ -189,7 +189,7 @@ const QuoteAuthor = styled.p`
   margin: 0;
   width: 100%;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     font-size: 24px;
     line-height: 32px;
     letter-spacing: 0;
@@ -222,7 +222,7 @@ const WayfindingWrapper = styled.div`
   justify-content: center;
   padding-left: 90px;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     padding-left: 40px;
   }
 `;
@@ -235,7 +235,7 @@ const Wayfinding = styled.div`
   width: 250px;
   flex-shrink: 0;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     width: 220px;
   }
 `;

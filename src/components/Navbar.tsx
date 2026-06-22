@@ -34,12 +34,12 @@ const NavInner = styled(MaxWidth)`
   height: 100%;
   position: relative;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     padding-left: 34px;
     padding-right: 34px;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: ${tokens.bpMobile}) {
     padding-left: 20px;
     padding-right: 20px;
   }
@@ -70,11 +70,11 @@ const ThemeToggle = styled.button`
     box-shadow var(--dur-fast) var(--ease-standard),
     border-color var(--dur-fast) var(--ease-standard);
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     right: 34px;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: ${tokens.bpMobile}) {
     right: 20px;
   }
 

@@ -1,6 +1,7 @@
 'use client';
 
 import styled from 'styled-components';
+import { tokens } from '@/lib/tokens';
 import { MaxWidth } from '@/components/ui/MaxWidth';
 
 // ─── Styles ───────────────────────────────────────────────────────────────────
@@ -15,11 +16,11 @@ const Inner = styled(MaxWidth)`
   display: flex;
   justify-content: center;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     max-width: 900px;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: ${tokens.bpMobile}) {
     max-width: 390px;
   }
 `;

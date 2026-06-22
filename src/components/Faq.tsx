@@ -23,11 +23,11 @@ export interface FaqProps {
 const Section = styled.section`
   padding: 96px 0 80px;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     padding: 63px 0 96px;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: ${tokens.bpMobile}) {
     padding: 63px 0 73px;
   }
 `;
@@ -38,14 +38,14 @@ const Inner = styled(MaxWidth)`
   justify-content: space-between;
   gap: 80px;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     flex-direction: column;
     justify-content: flex-start;
     gap: 40px;
     max-width: 706px;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: ${tokens.bpMobile}) {
     gap: 32px;
     max-width: 358px;
     padding: 0 16px;
@@ -61,7 +61,7 @@ const TitleCol = styled.div`
   flex-direction: column;
   gap: 16px;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     width: 100%;
     max-width: none;
     padding-right: 0;
@@ -76,7 +76,7 @@ const Heading = styled.h2`
   color: ${tokens.dark};
   margin: 0;
 
-  @media (max-width: 767px) {
+  @media (max-width: ${tokens.bpMobile}) {
     font-size: 32px;
     line-height: 40px;
     letter-spacing: -0.32px;
@@ -97,7 +97,7 @@ const AccordionGroup = styled.div`
   min-width: 0;
   padding-left: 40px;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     width: 100%;
     max-width: none;
     padding-left: 0;

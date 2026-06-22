@@ -23,13 +23,13 @@ const Section = styled.section`
   background: var(--color-hero-gradient);
   overflow: hidden;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     margin: 0 33px;
     border-bottom-left-radius: 24px;
     border-bottom-right-radius: 24px;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: ${tokens.bpMobile}) {
     margin: 0;
     border-bottom-left-radius: 16px;
     border-bottom-right-radius: 16px;
@@ -43,7 +43,7 @@ const Inner = styled(MaxWidth)`
   gap: 0;
   min-height: 548px;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     flex-direction: column;
     min-height: auto;
   }
@@ -58,14 +58,14 @@ const Content = styled.div`
   flex: 1;
   max-width: 600px;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     flex: none;
     gap: 48px;
     max-width: none;
     padding: 48px 64px;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: ${tokens.bpMobile}) {
     gap: 40px;
     padding: 40px 16px;
   }
@@ -86,7 +86,7 @@ const KickerRow = styled.div`
   letter-spacing: 0.1px;
   color: ${tokens.dark};
 
-  @media (max-width: 767px) {
+  @media (max-width: ${tokens.bpMobile}) {
     font-size: 16px;
     line-height: 24px;
     letter-spacing: 0.1px;
@@ -107,13 +107,13 @@ const Title = styled.h1`
   color: ${tokens.dark};
   margin: 0;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     font-size: 48px;
     line-height: 56px;
     letter-spacing: -0.96px;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: ${tokens.bpMobile}) {
     font-size: 40px;
     line-height: 48px;
     letter-spacing: -0.8px;
@@ -127,7 +127,7 @@ const Body = styled.p`
   color: ${tokens.bodyMuted};
   margin: 0;
 
-  @media (max-width: 767px) {
+  @media (max-width: ${tokens.bpMobile}) {
     font-size: 20px;
     line-height: 28px;
     letter-spacing: 0.1px;
@@ -139,7 +139,7 @@ const ButtonGroup = styled.div`
   flex-wrap: wrap;
   gap: 16px;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     flex-direction: column;
     width: 100%;
 
@@ -156,7 +156,7 @@ const ImageFrame = styled.div`
   align-self: stretch;
   overflow: hidden;
 
-  @media (max-width: 1024px) {
+  @media (max-width: ${tokens.bpTablet}) {
     flex: none;
     width: 100%;
     max-width: none;
@@ -165,7 +165,7 @@ const ImageFrame = styled.div`
     max-height: 560px;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: ${tokens.bpMobile}) {
     height: 390px;
     min-height: 390px;
     max-height: 390px;

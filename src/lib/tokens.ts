@@ -1,8 +1,12 @@
 export const tokens = {
   // Colors
-  snow:      'var(--color-bg-canvas)',
-  dark:      'var(--color-text-primary)',
+  snow: 'var(--color-bg-canvas)',
+  dark: 'var(--color-text-primary)',
   bodyMuted: 'var(--color-text-muted)',
+
+  // Breakpoints
+  bpTablet: '1024px',
+  bpMobile: '767px',
 
   // Shadows
   shadow: 'var(--shadow-elevation-1)',
