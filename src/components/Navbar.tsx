@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { tokens } from "@/lib/tokens";
 import { assets } from "@/lib/assets";
 import { MaxWidth } from "@/components/ui/MaxWidth";
+import { NAVBAR_ENTER_SCROLL_Y, NAVBAR_EXIT_SCROLL_Y } from "@/lib/constants";
 
 interface NavbarProps {
   isDark: boolean;
@@ -102,18 +103,15 @@ export function Navbar({ isDark, onToggleTheme }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const ENTER_SCROLL_Y = 64;
-    const EXIT_SCROLL_Y = 40;
-
     const onScroll = () => {
       const y = window.scrollY;
 
       setIsScrolled((prev) => {
-        if (!prev && y >= ENTER_SCROLL_Y) {
+        if (!prev && y >= NAVBAR_ENTER_SCROLL_Y) {
           return true;
         }
 
-        if (prev && y <= EXIT_SCROLL_Y) {
+        if (prev && y <= NAVBAR_EXIT_SCROLL_Y) {
           return false;
         }
 

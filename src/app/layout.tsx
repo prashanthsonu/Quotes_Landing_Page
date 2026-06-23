@@ -10,8 +10,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Acme - Quotes Landing Page",
-  description: "Lorem ipsum dolor sit amet consect alora",
+  title: "Acme",
+  description: "Quotes Landing Page",
   icons: {
     icon: "/Images/Okta_Logomark_Dark_Edition.svg",
   },

@@ -393,7 +393,7 @@ const ArrowCircle = styled.img<{ $isDark?: boolean }>`
     $isDark ? "brightness(0) saturate(100%)" : "none"};
 `;
 
-const ArrowIcon = styled.img<{ $isDark?: boolean}>`
+const ArrowIcon = styled.img<{ $isDark?: boolean }>`
   position: absolute;
   left: 12.5px;
   top: 12.5px;
@@ -405,6 +405,13 @@ const ArrowIcon = styled.img<{ $isDark?: boolean}>`
   @media (max-width: ${tokens.bpMobile}) {
     transform: rotate(90deg);
   }
+`;
+
+const AuthorWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
 `;
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -434,16 +441,9 @@ export function Carousel({
               <QuoteSwap key={activeIndex}>
                 <Testimonial>
                   <QuoteText>&ldquo;{current.quote}&rdquo;</QuoteText>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
-                      width: "100%",
-                    }}
-                  >
+                  <AuthorWrapper>
                     <QuoteAuthor>{current.author}</QuoteAuthor>
-                  </div>
+                  </AuthorWrapper>
                 </Testimonial>
               </QuoteSwap>
             </TextCard>
