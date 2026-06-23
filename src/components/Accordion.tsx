@@ -1,5 +1,6 @@
 'use client';
 
+import { useId } from 'react';
 import styled from 'styled-components';
 import { tokens } from '@/lib/tokens';
 import { assets } from '@/lib/assets';
@@ -58,7 +59,7 @@ const AccordionIcon = styled.img<{ $isDark?: boolean }>`
 const AccordionBodyWrap = styled.div<{ $open: boolean }>`
   display: grid;
   grid-template-rows: ${({ $open }) => ($open ? '1fr' : '0fr')};
-  transition: grid-template-rows var(--dur-base) var(--ease-standard)), opacity var(--dur-base) var(--ease-standard);
+  transition: grid-template-rows var(--dur-base) var(--ease-standard), opacity var(--dur-base) var(--ease-standard);
   opacity: ${({ $open }) => ($open ? 1 : 0)};
 `;
 
@@ -82,9 +83,17 @@ interface AccordionRowProps extends FaqItem {
 }
 
 export function AccordionRow({ question, answer, open, isDark, onToggle }: AccordionRowProps) {
+  const panelId = useId();
+  const triggerId = `${panelId}-trigger`;
+
   return (
     <AccordionItem>
-      <AccordionHeader onClick={onToggle} aria-expanded={open}>
+      <AccordionHeader
+        id={triggerId}
+        onClick={onToggle}
+        aria-expanded={open}
+        aria-controls={panelId}
+      >
         <AccordionTitle>{question}</AccordionTitle>
         <AccordionIcon
           style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}
@@ -93,7 +102,13 @@ export function AccordionRow({ question, answer, open, isDark, onToggle }: Accor
           alt={open ? 'Collapse' : 'Expand'}
         />
       </AccordionHeader>
-      <AccordionBodyWrap $open={open && Boolean(answer)} aria-hidden={!open}>
+      <AccordionBodyWrap
+        id={panelId}
+        role="region"
+        aria-labelledby={triggerId}
+        $open={open && Boolean(answer)}
+        aria-hidden={!open}
+      >
         <AccordionBodyInner>{answer && <AccordionBody>{answer}</AccordionBody>}</AccordionBodyInner>
       </AccordionBodyWrap>
     </AccordionItem>
