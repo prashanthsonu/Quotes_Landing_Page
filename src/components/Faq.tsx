@@ -73,7 +73,7 @@ const Heading = styled.h2`
   line-height: 48px;
   letter-spacing: -0.8px;
   font-weight: 400;
-  color: ${tokens.dark};
+  color: var(--color-text-primary);
   margin: 0;
 
   @media (max-width: ${tokens.bpMobile}) {
@@ -87,7 +87,7 @@ const Subtitle = styled.p`
   font-size: 20px;
   line-height: 28px;
   letter-spacing: 0.1px;
-  color: ${tokens.dark};
+  color: var(--color-text-primary);
   margin: 0;
 `;
 

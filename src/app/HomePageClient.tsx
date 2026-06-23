@@ -13,10 +13,10 @@ import { Footer } from '@/components/Footer';
 import { fallbackSlides, faqItems } from '../lib/homepage-content';
 
 const Page = styled.div`
-  background-color: ${tokens.snow};
+  background-color: var(--color-bg-canvas);
   min-height: 100vh;
   font-family: var(--font-body);
-  color: ${tokens.dark};
+  color: var(--color-text-primary);
   overflow-x: hidden;
 `;
 

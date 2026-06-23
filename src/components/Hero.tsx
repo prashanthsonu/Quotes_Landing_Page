@@ -84,7 +84,7 @@ const KickerRow = styled.div`
   font-size: 20px;
   line-height: 28px;
   letter-spacing: 0.1px;
-  color: ${tokens.dark};
+  color: var(--color-text-primary);
 
   @media (max-width: ${tokens.bpMobile}) {
     font-size: 16px;
@@ -104,7 +104,7 @@ const Title = styled.h1`
   line-height: 64px;
   letter-spacing: -1.12px;
   font-weight: 400;
-  color: ${tokens.dark};
+  color: var(--color-text-primary);
   margin: 0;
 
   @media (max-width: ${tokens.bpTablet}) {
@@ -124,7 +124,7 @@ const Body = styled.p`
   font-size: 24px;
   line-height: 32px;
   letter-spacing: 0;
-  color: ${tokens.bodyMuted};
+  color: var(--color-text-muted);
   margin: 0;
 
   @media (max-width: ${tokens.bpMobile}) {

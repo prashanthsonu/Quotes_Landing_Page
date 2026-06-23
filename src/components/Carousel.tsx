@@ -258,7 +258,7 @@ const QuoteText = styled.p`
   font-size: 20px;
   line-height: 28px;
   letter-spacing: 0.1px;
-  color: ${tokens.bodyMuted};
+  color: var(--color-text-muted);
   margin: 0;
   width: 100%;
 
@@ -279,7 +279,7 @@ const QuoteAuthor = styled.p`
   font-size: 24px;
   line-height: 32px;
   letter-spacing: 0;
-  color: ${tokens.dark};
+  color: var(--color-text-primary);
   margin: 0;
   width: 100%;
 
