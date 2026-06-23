@@ -7,6 +7,8 @@ export const assets = {
   heroImage:    '/Images/Hero_Image.png',
   leftPreview:  '/Images/left-top-preview.png',
   rightPreview: '/Images/right-top-preview.png',
+  leftPreviewMobile: '/Images/left-top-preview-mobile.png',
+  rightPreviewMobile: '/Images/right-top-preview-mobile.png',
   chevronRight: '/Images/chevron-right.svg',
   iconMinus:    '/Images/IconMinus.svg',
   iconPlus:     '/Images/IconPlus.svg',

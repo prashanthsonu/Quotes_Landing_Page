@@ -35,6 +35,55 @@ const Section = styled.section`
 const Track = styled.div`
   display: flex;
   align-items: center;
+
+  @media (max-width: ${tokens.bpMobile}) {
+    flex-direction: column;
+    gap: 0;
+  }
+`;
+
+const MobileTopPreview = styled.div`
+  display: none;
+
+  @media (max-width: ${tokens.bpMobile}) {
+    display: block;
+    width: calc(100% - 32px);
+    max-width: 358px;
+    margin: 0 16px;
+    margin-bottom: -1px;
+    height: 30px;
+    overflow: hidden;
+
+    & > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+  }
+`;
+
+const MobileBottomPreview = styled.div`
+  display: none;
+
+  @media (max-width: ${tokens.bpMobile}) {
+    display: block;
+    width: calc(100% - 32px);
+    max-width: 358px;
+    margin: 0 16px;
+    margin-top: -1px;
+    height: 30px;
+    overflow: hidden;
+
+    & > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+  }
 `;
 
 const LeftPreview = styled.div`
@@ -371,6 +420,10 @@ export function Carousel({
   return (
     <Section>
       <Track>
+        <MobileTopPreview>
+          <PeekImage src={assets.leftPreviewMobile} alt="" />
+        </MobileTopPreview>
+
         <LeftPreview>
           <PeekImage src={assets.leftPreview} alt="" />
         </LeftPreview>
@@ -422,6 +475,10 @@ export function Carousel({
         <RightPreview>
           <PeekImage src={assets.rightPreview} alt="" />
         </RightPreview>
+
+        <MobileBottomPreview>
+          <PeekImage src={assets.rightPreviewMobile} alt="" />
+        </MobileBottomPreview>
       </Track>
     </Section>
   );
