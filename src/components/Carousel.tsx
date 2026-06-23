@@ -143,6 +143,13 @@ const SlideInner = styled.div`
     width: auto;
     height: auto;
   }
+
+  @media (max-width: ${tokens.bpMobile}) {
+    left: 16px;
+    top: 16px;
+    right: 16px;
+    bottom: 16px;
+  }
 `;
 
 const TextCard = styled.div`
@@ -161,6 +168,12 @@ const TextCard = styled.div`
   @media (max-width: ${tokens.bpTablet}) {
     width: 396px;
     gap: 32px;
+  }
+
+  @media (max-width: ${tokens.bpMobile}) {
+    width: 236.28px;
+    padding: 24px 16px;
+    gap: 24px;
   }
 `;
 
@@ -205,6 +218,12 @@ const QuoteText = styled.p`
     line-height: 28px;
     letter-spacing: 0.1px;
   }
+
+  @media (max-width: ${tokens.bpMobile}) {
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0.2px;
+  }
 `;
 
 const QuoteAuthor = styled.p`
@@ -219,6 +238,12 @@ const QuoteAuthor = styled.p`
     font-size: 24px;
     line-height: 32px;
     letter-spacing: 0;
+  }
+
+  @media (max-width: ${tokens.bpMobile}) {
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: 0.1px;
   }
 `;
 
