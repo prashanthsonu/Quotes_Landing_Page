@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import styled, { keyframes } from 'styled-components';
-import { tokens } from '@/lib/tokens';
-import { assets } from '@/lib/assets';
+import styled, { keyframes } from "styled-components";
+import { tokens } from "@/lib/tokens";
+import { assets } from "@/lib/assets";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 export interface Slide {
@@ -51,6 +51,10 @@ const LeftPreview = styled.div`
       object-position: left center;
     }
   }
+
+  @media (max-width: ${tokens.bpMobile}) {
+    display: none;
+  }
 `;
 
 const RightPreview = styled.div`
@@ -66,6 +70,10 @@ const RightPreview = styled.div`
     & > img {
       object-position: right center;
     }
+  }
+
+  @media (max-width: ${tokens.bpMobile}) {
+    display: none;
   }
 `;
 
@@ -85,7 +93,7 @@ const Slide = styled.div<{ $isDark?: boolean }>`
   flex-shrink: 0;
   background-image: ${({ $isDark }) =>
     $isDark
-      ? 'radial-gradient(223.62% 89.76% at 50% 84.71%, #ff6217 0%, #d24a33 15.44%, #a4324f 30.89%, #77196a 46.33%, #600d78 54.05%, #490186 61.77%, #3d076b 70.25%, #310d50 78.72%, #251334 87.2%, #191919 95.67%)'
+      ? "radial-gradient(223.62% 89.76% at 50% 84.71%, #ff6217 0%, #d24a33 15.44%, #a4324f 30.89%, #77196a 46.33%, #600d78 54.05%, #490186 61.77%, #3d076b 70.25%, #310d50 78.72%, #251334 87.2%, #191919 95.67%)"
       : `url('${assets.rectangle4}')`};
   background-size: cover;
   background-position: center;
@@ -95,6 +103,24 @@ const Slide = styled.div<{ $isDark?: boolean }>`
     height: 628px;
     background-position: 10% 80%;
     background-size: 100% 100%;
+
+    ${({ $isDark }) => !$isDark && `
+        background-image:  linear-gradient(180deg, rgba(25, 25, 25, 0.00) 71.58%, rgba(25, 25, 25, 0.50) 100%), 
+        radial-gradient(85.28% 72.24% at 58.64% 52.31%, #788BEB 0%, #FFFEFA 100%);
+      `}
+  }
+
+  @media (max-width: ${tokens.bpMobile}) {
+    width: 358px;
+    height: 566px;
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    ${({ $isDark }) => !$isDark && `
+        background-image:  linear-gradient(180deg, rgba(25, 25, 25, 0.00) 69.59%, rgba(25, 25, 25, 0.40) 100%), 
+        radial-gradient(66.45% 82.96% at 50% 50%, #788BEB 0%, #FFFEFA 100%);
+      `}
   }
 `;
 
@@ -225,6 +251,13 @@ const WayfindingWrapper = styled.div`
   @media (max-width: ${tokens.bpTablet}) {
     padding-left: 40px;
   }
+
+  @media (max-width: ${tokens.bpMobile}) {
+    padding-left: 0;
+    padding-bottom: 16px;
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
 `;
 
 const Wayfinding = styled.div`
@@ -235,8 +268,9 @@ const Wayfinding = styled.div`
   width: 250px;
   flex-shrink: 0;
 
-  @media (max-width: ${tokens.bpTablet}) {
+  @media (max-width: ${tokens.bpMobile}) {
     width: 220px;
+    height: 5px;
   }
 `;
 
@@ -245,13 +279,22 @@ const WayfindingDot = styled.div<{ $active?: boolean }>`
   flex: 1 0 0;
   min-width: 1px;
   border-radius: 24px;
-  background: ${({ $active }) => ($active ? 'var(--color-wayfinding-active)' : 'var(--color-wayfinding-idle)')};
+  background: ${({ $active }) =>
+    $active
+      ? "var(--color-wayfinding-active)"
+      : "var(--color-wayfinding-idle)"};
 `;
 
 const ArrowGroup = styled.div`
   display: flex;
   gap: 10px;
   flex-shrink: 0;
+
+  @media (max-width: ${tokens.bpMobile}) {
+    flex-direction: column;
+    width: 40px;
+    height: 90px;
+  }
 `;
 
 const ArrowButton = styled.button`
@@ -271,21 +314,32 @@ const ArrowCircle = styled.img<{ $isDark?: boolean }>`
   width: 40px;
   height: 40px;
   display: block;
-  filter: ${({ $isDark }) => ($isDark ? 'brightness(0) saturate(100%)' : 'none')};
+  filter: ${({ $isDark }) =>
+    $isDark ? "brightness(0) saturate(100%)" : "none"};
 `;
 
-const ArrowIcon = styled.img<{ $isDark?: boolean }>`
+const ArrowIcon = styled.img<{ $isDark?: boolean}>`
   position: absolute;
   left: 12.5px;
   top: 12.5px;
   width: 15px;
   height: 15px;
   display: block;
-  filter: ${({ $isDark }) => ($isDark ? 'invert(1)' : 'none')};
+  filter: ${({ $isDark }) => ($isDark ? "invert(1)" : "none")};
+
+  @media (max-width: ${tokens.bpMobile}) {
+    transform: rotate(90deg);
+  }
 `;
 
 // ─── Component ────────────────────────────────────────────────────────────────
-export function Carousel({ slides, activeIndex = 0, isDark = false, onPrev, onNext }: CarouselProps) {
+export function Carousel({
+  slides,
+  activeIndex = 0,
+  isDark = false,
+  onPrev,
+  onNext,
+}: CarouselProps) {
   const current = slides[activeIndex];
 
   return (
@@ -301,7 +355,14 @@ export function Carousel({ slides, activeIndex = 0, isDark = false, onPrev, onNe
               <QuoteSwap key={activeIndex}>
                 <Testimonial>
                   <QuoteText>&ldquo;{current.quote}&rdquo;</QuoteText>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%' }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                      width: "100%",
+                    }}
+                  >
                     <QuoteAuthor>{current.author}</QuoteAuthor>
                   </div>
                 </Testimonial>
