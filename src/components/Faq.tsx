@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { tokens } from '@/lib/tokens';
 import { MaxWidth } from '@/components/ui/MaxWidth';
 import { AccordionRow } from '@/components/Accordion';
+import { useInView } from '@/hooks/useInView';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 export interface FaqItem {
@@ -20,6 +21,7 @@ export interface FaqProps {
 }
 
 // ─── Styles ───────────────────────────────────────────────────────────────────
+
 const Section = styled.section`
   padding: 96px 0 80px;
 
@@ -52,7 +54,7 @@ const Inner = styled(MaxWidth)`
   }
 `;
 
-const TitleCol = styled.div`
+const TitleCol = styled.div<{ $inView: boolean }>`
   flex: 1;
   max-width: 560px;
   min-width: 0;
@@ -60,11 +62,22 @@ const TitleCol = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  opacity: ${({ $inView }) => ($inView ? 1 : 0)};
+  transform: translateY(${({ $inView }) => ($inView ? '0' : '14px')});
+  transition:
+    opacity var(--dur-slow) var(--ease-standard),
+    transform var(--dur-slow) var(--ease-standard);
 
   @media (max-width: ${tokens.bpTablet}) {
     width: 100%;
     max-width: none;
     padding-right: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 `;
 
@@ -91,16 +104,27 @@ const Subtitle = styled.p`
   margin: 0;
 `;
 
-const AccordionGroup = styled.div`
+const AccordionGroup = styled.div<{ $inView: boolean }>`
   flex: 1;
   max-width: 640px;
   min-width: 0;
   padding-left: 40px;
+  opacity: ${({ $inView }) => ($inView ? 1 : 0)};
+  transform: translateY(${({ $inView }) => ($inView ? '0' : '14px')});
+  transition:
+    opacity var(--dur-slow) var(--ease-standard) 120ms,
+    transform var(--dur-slow) var(--ease-standard) 120ms;
 
   @media (max-width: ${tokens.bpTablet}) {
     width: 100%;
     max-width: none;
     padding-left: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 `;
 
@@ -110,14 +134,18 @@ const AccordionGroup = styled.div`
 export function Faq({ heading, subtitle, items, isDark = false }: FaqProps) {
   const [openIndex, setOpenIndex] = useState(0);
 
+  const { ref: titleRef, isInView: isTitleInView } = useInView<HTMLDivElement>();
+
+  const { ref: accordionRef, isInView: isAccordionInView } = useInView<HTMLDivElement>();
+
   return (
     <Section>
       <Inner>
-        <TitleCol>
+        <TitleCol ref={titleRef} $inView={isTitleInView}>
           <Heading>{heading}</Heading>
           <Subtitle>{subtitle}</Subtitle>
         </TitleCol>
-        <AccordionGroup>
+        <AccordionGroup ref={accordionRef} $inView={isAccordionInView}>
           {items.map((item, i) => (
             <AccordionRow
               key={item.question}

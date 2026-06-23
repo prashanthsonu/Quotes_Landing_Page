@@ -6,6 +6,7 @@ import { tokens } from '@/lib/tokens';
 import { assets } from '@/lib/assets';
 import { MaxWidth } from '@/components/ui/MaxWidth';
 import { PrimaryButton, SecondaryButton } from '@/components/ui/Button';
+import { useInView } from '@/hooks/useInView';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 export interface HeroProps {
@@ -19,6 +20,7 @@ export interface HeroProps {
 }
 
 // ─── Styles ───────────────────────────────────────────────────────────────────
+
 const Section = styled.section`
   background: var(--color-hero-gradient);
   overflow: hidden;
@@ -49,7 +51,7 @@ const Inner = styled(MaxWidth)`
   }
 `;
 
-const Content = styled.div`
+const Content = styled.div<{ $inView: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 64px;
@@ -57,6 +59,11 @@ const Content = styled.div`
   padding: 64px 0;
   flex: 1;
   max-width: 600px;
+  opacity: ${({ $inView }) => ($inView ? 1 : 0)};
+  transform: translateY(${({ $inView }) => ($inView ? '0' : '16px')});
+  transition:
+    opacity var(--dur-slow) var(--ease-standard),
+    transform var(--dur-slow) var(--ease-standard);
 
   @media (max-width: ${tokens.bpTablet}) {
     flex: none;
@@ -68,6 +75,12 @@ const Content = styled.div`
   @media (max-width: ${tokens.bpMobile}) {
     gap: 40px;
     padding: 40px 16px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 `;
 
@@ -149,12 +162,19 @@ const ButtonGroup = styled.div`
   }
 `;
 
-const ImageFrame = styled.div`
+const ImageFrame = styled.div<{ $inView: boolean }>`
   flex: 1;
   max-width: 600px;
+  min-height: 548px;
+  aspect-ratio: 600 / 548;
   position: relative;
   align-self: stretch;
   overflow: hidden;
+  opacity: ${({ $inView }) => ($inView ? 1 : 0)};
+  transform: translateX(${({ $inView }) => ($inView ? '0' : '18px')});
+  transition:
+    opacity var(--dur-slow) var(--ease-standard) 120ms,
+    transform var(--dur-slow) var(--ease-standard) 120ms;
 
   @media (max-width: ${tokens.bpTablet}) {
     flex: none;
@@ -170,6 +190,12 @@ const ImageFrame = styled.div`
     min-height: 390px;
     max-height: 390px;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 `;
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -182,10 +208,14 @@ export function Hero({
   onPrimaryClick,
   onSecondaryClick,
 }: HeroProps) {
+  const { ref: contentRef, isInView: isContentInView } = useInView<HTMLDivElement>();
+
+  const { ref: imageRef, isInView: isImageInView } = useInView<HTMLDivElement>();
+
   return (
     <Section>
       <Inner>
-        <Content>
+        <Content ref={contentRef} $inView={isContentInView}>
           <Copy>
             <div>
               <KickerRow>
@@ -204,7 +234,7 @@ export function Hero({
             <SecondaryButton onClick={onSecondaryClick}>{secondaryCta}</SecondaryButton>
           </ButtonGroup>
         </Content>
-        <ImageFrame>
+        <ImageFrame ref={imageRef} $inView={isImageInView}>
           <Image
             src={assets.heroImage}
             alt="Hero preview"
