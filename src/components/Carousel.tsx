@@ -305,6 +305,7 @@ const ArrowButton = styled.button`
   border: none;
   cursor: pointer;
   padding: 0;
+  outline: none;
 `;
 
 const ArrowCircle = styled.img<{ $isDark?: boolean }>`
