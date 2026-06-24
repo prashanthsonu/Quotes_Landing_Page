@@ -2,7 +2,6 @@
 
 import { useMemo } from 'react';
 import styled from 'styled-components';
-import { tokens } from '@/lib/tokens';
 import { useTheme } from '@/hooks/useTheme';
 import { useCarousel } from '@/hooks/useCarousel';
 import { Navbar } from '@/components/Navbar';

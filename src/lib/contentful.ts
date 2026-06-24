@@ -10,13 +10,10 @@ interface ContentfulResponse {
   total?: number;
 }
 
-function shuffle<T>(items: T[]) {
-  const arr = [...items];
-  for (let i = arr.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
+export interface QuotePageResult {
+  slides: Slide[];
+  page: number;
+  pageCount: number;
 }
 
 function getContentfulConfig() {
@@ -47,7 +44,7 @@ function parseQuotes(data: ContentfulResponse): Slide[] {
 
       return { quote, author } satisfies Slide;
     })
-    .filter((item): item is Slide => item !== null);
+    .filter((item): item is Slide => item !== null); // Filter out null values
 }
 
 async function requestQuotePage(spaceId: string, token: string, page: number, limit: number) {
@@ -62,53 +59,23 @@ async function requestQuotePage(spaceId: string, token: string, page: number, li
   return (await response.json()) as ContentfulResponse;
 }
 
-export interface QuotePageResult {
-  slides: Slide[];
-  page: number;
-  pageCount: number;
-}
-
+// Fetches a page of quotes from Contentful, normalizes the page number, and returns the slides along with pagination information.
 export async function getQuotesPage(page = 0, limit = 3): Promise<QuotePageResult> {
-  const safeLimit = Math.max(1, Math.floor(limit));
-  const safePage = Math.max(0, Math.floor(page));
   const { spaceId, token } = getContentfulConfig();
 
-  const initialData = await requestQuotePage(spaceId, token, safePage, safeLimit);
+  const initialData = await requestQuotePage(spaceId, token, page, limit);
   const total = typeof initialData.total === 'number' ? initialData.total : 0;
-  const pageCount = total > 0 ? Math.ceil(total / safeLimit) : 0;
+  const pageCount = total > 0 ? Math.ceil(total / limit) : 0;
 
   if (pageCount === 0) {
     return { slides: [], page: 0, pageCount: 0 };
   }
 
-  const normalizedPage = normalizePage(safePage, pageCount);
+  const normalizedPage = normalizePage(page, pageCount);
 
   return {
     slides: parseQuotes(initialData),
     page: normalizedPage,
     pageCount,
   };
-}
-
-export async function getRandomQuotes(limit?: number): Promise<Slide[]> {
-  const { spaceId, token } = getContentfulConfig();
-  const url = `https://cdn.contentful.com/spaces/${spaceId}/environments/master/entries?access_token=${token}&content_type=quotes`;
-
-  const response = await fetch(url, { cache: 'no-store' });
-  if (!response.ok) {
-    throw new Error(`Contentful request failed with status ${response.status}.`);
-  }
-
-  const data = (await response.json()) as ContentfulResponse;
-  const quotes = parseQuotes(data);
-
-  if (typeof limit !== 'number' || limit < 1) {
-    return shuffle(quotes);
-  }
-
-  if (quotes.length <= limit) {
-    return quotes;
-  }
-
-  return shuffle(quotes).slice(0, limit);
 }
