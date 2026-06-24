@@ -40,6 +40,7 @@ export function HomePageClient({ slides, initialPageCount }: HomePageClientProps
       <Navbar isDark={isDark} onToggleTheme={toggleTheme} />
 
       <Hero
+        isDark={isDark}
         title="Lorem ipsum dolor sit amet consect alora"
         body="Adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi."
         primaryCta="Primary CTA"

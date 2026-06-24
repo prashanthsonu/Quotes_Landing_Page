@@ -10,6 +10,7 @@ export const assets = {
   leftPreviewMobile: '/Images/left-top-preview-mobile.png',
   rightPreviewMobile: '/Images/right-top-preview-mobile.png',
   chevronRight: '/Images/chevron-right.svg',
+  chevronRightDark: '/Images/chevron-right-dark.svg',
   iconMinus:    '/Images/IconMinus.svg',
   iconPlus:     '/Images/IconPlus.svg',
   circle:       '/Images/Circle.svg',
