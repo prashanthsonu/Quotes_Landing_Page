@@ -17,4 +17,5 @@ export const assets = {
   arrowRight:   '/Images/arrow-right.svg',
   rectangle1:   '/Images/Rectangle1.png',
   rectangle4:   '/Images/Rectangle4.png',
+  chevronRightDark: '/Images/chevron-right-dark.svg',
 } as const;

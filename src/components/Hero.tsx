@@ -11,6 +11,7 @@ import { useInView } from '@/hooks/useInView';
 // ─── Types ────────────────────────────────────────────────────────────────────
 export interface HeroProps {
   kicker?: { platform: string; feature: string };
+  isDark?: boolean;
   title: string;
   body: string;
   primaryCta: string;
@@ -201,6 +202,7 @@ const ImageFrame = styled.div<{ $inView: boolean }>`
 // ─── Component ────────────────────────────────────────────────────────────────
 export function Hero({
   kicker = { platform: 'Platform or Solution', feature: 'Feature or Page Title' },
+  isDark = false,
   title,
   body,
   primaryCta,
@@ -221,7 +223,7 @@ export function Hero({
               <KickerRow>
                 <span>{kicker.platform}</span>
                 <KickerSep aria-hidden="true">
-                  <Image src={assets.chevronRight} alt="" width={16} height={16} />
+                  <Image src={isDark ? assets.chevronRightDark : assets.chevronRight} alt="" width={16} height={16} />
                 </KickerSep>
                 <span>{kicker.feature}</span>
               </KickerRow>
