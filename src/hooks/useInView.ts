@@ -1,9 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-
-const VISIBILITY_THRESHOLD = 0.2;
-const VISIBILITY_ROOT_MARGIN = '0px 0px -8% 0px';
+import { VISIBILITY_THRESHOLD, VISIBILITY_ROOT_MARGIN } from '@/lib/constants';
 
 interface UseInViewReturn<T extends HTMLElement> {
   ref: React.RefObject<T | null>;
@@ -20,11 +18,18 @@ export function useInView<T extends HTMLElement>(): UseInViewReturn<T> {
       return;
     }
 
+    // Fallback for environments without IntersectionObserver support
     if (typeof IntersectionObserver === 'undefined') {
-      setIsInView(true);
-      return;
+      const fallbackTimer = window.setTimeout(() => {
+        setIsInView(true);
+      }, 0);
+
+      return () => {
+        window.clearTimeout(fallbackTimer);
+      };
     }
 
+    // Create an IntersectionObserver to monitor the element's visibility
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;

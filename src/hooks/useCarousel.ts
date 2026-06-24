@@ -1,23 +1,19 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useCallback } from 'react';
 import { type Slide } from '@/components/Carousel';
-
-const AUTOPLAY_INTERVAL_MS = 3000;
-const AUTOPLAY_RESUME_DELAY_MS = 5000;
+import { normalizePage } from '@/lib/api-utils';
+import {
+  CAROUSEL_AUTOPLAY_INTERVAL_MS,
+  CAROUSEL_AUTOPLAY_RESUME_DELAY_MS,
+  DEFAULT_QUOTES_LIMIT,
+} from '@/lib/constants';
 
 interface QuotePageResponse {
   slides: Slide[];
   page: number;
   pageCount: number;
-}
-
-function normalizePage(page: number, pageCount: number): number {
-  if (pageCount < 1) {
-    return 0;
-  }
-
-  return ((page % pageCount) + pageCount) % pageCount;
 }
 
 interface UseCarouselProps {
@@ -36,11 +32,12 @@ export function useCarousel({ initialSlides, initialPageCount, fallbackSlides }:
   const autoplayResumeTimeoutRef = useRef<number | null>(null);
   const nextRef = useRef<(() => Promise<void>) | null>(null);
 
-  const fetchBatch = async (targetPage: number): Promise<number | null> => {
+  // Fetch a batch of slides for the specified page
+  const fetchBatch = useCallback(async (targetPage: number): Promise<number | null> => {
     setIsLoadingBatch(true);
 
     try {
-      const response = await fetch(`/api/quotes?page=${targetPage}&limit=3`, {
+      const response = await fetch(`/api/quotes?page=${targetPage}&limit=${DEFAULT_QUOTES_LIMIT}`, {
         cache: 'no-store',
       });
 
@@ -63,8 +60,9 @@ export function useCarousel({ initialSlides, initialPageCount, fallbackSlides }:
     } finally {
       setIsLoadingBatch(false);
     }
-  };
+  }, []);
 
+  // Move to the previous slide, fetching a new batch if necessary
   const prev = async (): Promise<void> => {
     if (batchSlides.length <= 1 || isLoadingBatch) {
       return;
@@ -90,7 +88,8 @@ export function useCarousel({ initialSlides, initialPageCount, fallbackSlides }:
     setActiveSlide(batchSlides.length - 1);
   };
 
-  const next = async (): Promise<void> => {
+  // Move to the next slide, fetching a new batch if necessary
+  const next = useCallback(async (): Promise<void> => {
     if (batchSlides.length <= 1 || isLoadingBatch) {
       return;
     }
@@ -113,8 +112,9 @@ export function useCarousel({ initialSlides, initialPageCount, fallbackSlides }:
     }
 
     setActiveSlide(0);
-  };
+  }, [activeSlide, batchSlides.length, currentPage, fetchBatch, isLoadingBatch, pageCount]);
 
+  // Pause autoplay temporarily when user interacts with the carousel
   const pauseAutoplayTemporarily = () => {
     setIsAutoplayEnabled(false);
 
@@ -125,21 +125,27 @@ export function useCarousel({ initialSlides, initialPageCount, fallbackSlides }:
     autoplayResumeTimeoutRef.current = window.setTimeout(() => {
       setIsAutoplayEnabled(true);
       autoplayResumeTimeoutRef.current = null;
-    }, AUTOPLAY_RESUME_DELAY_MS);
+    }, CAROUSEL_AUTOPLAY_RESUME_DELAY_MS);
   };
 
+  // Handlers for user interactions that pause autoplay
   const handlePrev = () => {
     pauseAutoplayTemporarily();
     void prev();
   };
 
+  // Handlers for user interactions that pause autoplay
   const handleNext = () => {
     pauseAutoplayTemporarily();
     void next();
   };
 
-  nextRef.current = next;
+  // Keep a reference to the latest next function for use in the autoplay interval
+  useEffect(() => {
+    nextRef.current = next;
+  }, [next]);
 
+  // Clean up the autoplay resume timeout when the component unmounts
   useEffect(() => {
     return () => {
       if (autoplayResumeTimeoutRef.current !== null) {
@@ -148,6 +154,7 @@ export function useCarousel({ initialSlides, initialPageCount, fallbackSlides }:
     };
   }, []);
 
+  // Set up the autoplay interval
   useEffect(() => {
     if (batchSlides.length <= 1) {
       return;
@@ -165,7 +172,7 @@ export function useCarousel({ initialSlides, initialPageCount, fallbackSlides }:
       if (nextRef.current) {
         void nextRef.current();
       }
-    }, AUTOPLAY_INTERVAL_MS);
+    }, CAROUSEL_AUTOPLAY_INTERVAL_MS);
 
     return () => {
       window.clearInterval(timer);
